@@ -321,14 +321,18 @@ fun main(args: Array<String>) {
     println("123".myIsEmpty())
 
     //人机交互和异常处理
-    println("请输入数字：")
-    var str1 = readLine() //键盘输入的都是字符串
-    try {
-        println("input is ${str1?.toInt()}")
-    } catch (e: Exception) {
-        println("出错了：${e.message}")
-    }
+//    println("请输入数字：")
+//    var str1 = readLine() //键盘输入的都是字符串
+//    try {
+//        println("input is ${str1?.toInt()}")
+//    } catch (e: Exception) {
+//        println("出错了：${e.message}")
+//    }
 
+    //inline 内联优化用于函数上,函数内容直接插到调用处编译
+    //noline 局部关掉内联优化,解除不能把函数类型参数当做对象使用的限制
+    //crossinline 让内联函数里的函数参数可以被间接调用,但是这个函数参数(lambda)不能使用return 比如在runOnUiThread里调用
+    testInline { println("inline 调用处直插编译") }
 }
 
 interface IWalk {
@@ -386,6 +390,11 @@ fun test_callback(block: ((TestKotlin) -> Unit)?) {
     thread {
         Thread.sleep(3000)
         block?.invoke(TestKotlin()) //if (block!=null)block(TestKotlin()) //java方式
-    }.start()
+    }
+}
+
+inline fun testInline(afterblock:()->Unit){
+    println("testInline")
+    afterblock()
 }
 

@@ -47,7 +47,7 @@ class TestKotlin {
 
     //中缀表达式 infix
     infix fun sayTo(name:String){
-
+        println("sayto $name")
     }
 
 }
